@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="CopilotSDKPlayground.Api/CopilotSDKPlayground.Api.csproj" />
+  <Project Path="CopilotSDKPlayground.AppHost/CopilotSDKPlayground.AppHost.csproj" />
+  <Project Path="CopilotSDKPlayground.ServiceDefaults/CopilotSDKPlayground.ServiceDefaults.csproj" />
+</Solution>

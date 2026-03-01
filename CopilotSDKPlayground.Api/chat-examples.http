@@ -1,0 +1,56 @@
+@api_base_url = https://localhost:7123
+
+### Health Check
+GET {{api_base_url}}/health
+
+###
+
+### Create a chat session with default model
+POST {{api_base_url}}/api/chat/sessions
+Content-Type: application/json
+
+{}
+
+###
+
+### Create a chat session with specific model
+POST {{api_base_url}}/api/chat/sessions
+Content-Type: application/json
+
+{
+  "model": "gpt-4o",
+  "sessionId": "my-custom-session-1"
+}
+
+###
+
+### Send a simple message (update sessionId from response above)
+# @name sendMessage
+POST {{api_base_url}}/api/chat/my-custom-session-1/messages
+Content-Type: application/json
+
+{
+  "prompt": "Hello! Can you explain what GitHub Copilot SDK is in one sentence?"
+}
+
+###
+
+### Send a message asking for a calculation
+POST {{api_base_url}}/api/chat/my-custom-session-1/messages
+Content-Type: application/json
+
+{
+  "prompt": "What is 25 * 4 + 100?"
+}
+
+###
+
+### Get session history
+GET {{api_base_url}}/api/chat/my-custom-session-1/history
+
+###
+
+### Delete a session (cleanup)
+DELETE {{api_base_url}}/api/chat/my-custom-session-1
+
+###
