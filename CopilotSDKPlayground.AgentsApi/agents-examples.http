@@ -1,0 +1,84 @@
+### Multi-Agent Orchestration API Examples
+### Start via AppHost or: dotnet run --project CopilotSDKPlayground.AgentsApi
+@agentsHost = http://localhost:5400
+
+### ─── Pattern A: Coordinator / Specialist ────────────────────────────────────
+###
+### The coordinator analyses the task and routes it to the best specialist:
+###   Research | Code | Writing | Data
+###
+### Response includes: agentUsed, reasoning, response
+
+### Route a coding task
+POST {{agentsHost}}/api/agents/coordinator
+Content-Type: application/json
+
+{
+  "task": "Write a C# method that implements binary search on a sorted list with full error handling and XML documentation."
+}
+
+###
+
+### Route a research task
+POST {{agentsHost}}/api/agents/coordinator
+Content-Type: application/json
+
+{
+  "task": "What are the key differences between transformer and LSTM architectures for NLP tasks?"
+}
+
+###
+
+### Route a data analysis task
+POST {{agentsHost}}/api/agents/coordinator
+Content-Type: application/json
+
+{
+  "task": "Our e-commerce conversion rate dropped from 4.2% to 2.8% last month. What could be the causes and how should we investigate?"
+}
+
+###
+
+### Route a writing task
+POST {{agentsHost}}/api/agents/coordinator
+Content-Type: application/json
+
+{
+  "task": "Write a blog post introduction about why developers should adopt .NET Aspire for cloud-native applications."
+}
+
+### ─── Pattern B: Orchestrator / Sub-agents ───────────────────────────────────
+###
+### The orchestrator decomposes the goal into 2-4 independent sub-tasks,
+### runs them in parallel via Task.WhenAll, then synthesises the results.
+###
+### Response includes: subTaskResults[] (each sub-task's agent + result) + synthesizedResponse
+
+### Complex technical goal — orchestrator decomposes into Research + Code + Writing sub-tasks
+POST {{agentsHost}}/api/agents/orchestrator
+Content-Type: application/json
+
+{
+  "goal": "Create a complete guide for implementing JWT authentication in a .NET 10 minimal API, including security best practices."
+}
+
+###
+
+### Business analysis goal — decomposes into Research + Analyst + Writer sub-tasks
+POST {{agentsHost}}/api/agents/orchestrator
+Content-Type: application/json
+
+{
+  "goal": "Analyse the tradeoffs between microservices and monolithic architectures for a startup with 5 developers building a SaaS product."
+}
+
+###
+
+### Use a specific model
+POST {{agentsHost}}/api/agents/orchestrator
+Content-Type: application/json
+
+{
+  "goal": "Design a scalable notification system that handles 10 million users with email, push, and in-app channels.",
+  "model": "gpt-4o"
+}

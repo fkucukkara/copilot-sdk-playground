@@ -5,6 +5,10 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="CopilotSDKPlayground.Api/CopilotSDKPlayground.Api.csproj" />
+  <Project Path="CopilotSDKPlayground.RagApi/CopilotSDKPlayground.RagApi.csproj" />
+  <Project Path="CopilotSDKPlayground.McpServer/CopilotSDKPlayground.McpServer.csproj" />
+  <Project Path="CopilotSDKPlayground.McpApi/CopilotSDKPlayground.McpApi.csproj" />
+  <Project Path="CopilotSDKPlayground.AgentsApi/CopilotSDKPlayground.AgentsApi.csproj" />
   <Project Path="CopilotSDKPlayground.AppHost/CopilotSDKPlayground.AppHost.csproj" />
   <Project Path="CopilotSDKPlayground.ServiceDefaults/CopilotSDKPlayground.ServiceDefaults.csproj" />
 </Solution>

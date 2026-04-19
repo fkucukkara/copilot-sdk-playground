@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Redis" Version="9.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CopilotSDKPlayground.Api\CopilotSDKPlayground.Api.csproj" />
+    <ProjectReference Include="..\CopilotSDKPlayground.RagApi\CopilotSDKPlayground.RagApi.csproj" />
+    <ProjectReference Include="..\CopilotSDKPlayground.McpServer\CopilotSDKPlayground.McpServer.csproj" />
+    <ProjectReference Include="..\CopilotSDKPlayground.McpApi\CopilotSDKPlayground.McpApi.csproj" />
+    <ProjectReference Include="..\CopilotSDKPlayground.AgentsApi\CopilotSDKPlayground.AgentsApi.csproj" />
   </ItemGroup>
 
 </Project>

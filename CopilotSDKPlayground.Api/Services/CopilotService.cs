@@ -36,17 +36,22 @@ public class CopilotService : ICopilotService, IAsyncDisposable
         }
     }
 
-    public async Task<CopilotSession> CreateSessionAsync(string model, string? sessionId = null)
-    {
-        var session = await _client.CreateSessionAsync(new SessionConfig
+    public Task<CopilotSession> CreateSessionAsync(string model, string? sessionId = null) =>
+        CreateSessionAsync(new SessionConfig
         {
             Model = model,
             SessionId = sessionId,
             OnPermissionRequest = PermissionHandler.ApproveAll
         });
 
+    public async Task<CopilotSession> CreateSessionAsync(SessionConfig config)
+    {
+        // Ensure permission handler is always set so demos work without extra setup
+        config.OnPermissionRequest ??= PermissionHandler.ApproveAll;
+
+        var session = await _client.CreateSessionAsync(config);
         _sessions.TryAdd(session.SessionId, session);
-        _logger.LogInformation("Created session {SessionId} with model {Model}", session.SessionId, model);
+        _logger.LogInformation("Created session {SessionId} with model {Model}", session.SessionId, config.Model);
 
         return session;
     }

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CopilotSDKPlayground.McpApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57939;http://localhost:57942"
+    }
+  }
+}

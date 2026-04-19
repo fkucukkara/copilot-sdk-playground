@@ -1,0 +1,68 @@
+### MCP + Copilot API Examples
+### Start via AppHost (starts both McpServer and McpApi together)
+@mcpApiHost = http://localhost:5300
+
+### ─── Tool Discovery ──────────────────────────────────────────────────────────
+
+### List all tools discovered from the MCP server
+### Shows tool names, descriptions, and the MCP server endpoint
+GET {{mcpApiHost}}/api/mcp/tools
+
+### ─── MCP-Backed Chat ─────────────────────────────────────────────────────────
+
+### Create a Copilot session backed by MCP tools
+### The response includes availableTools — all MCP tools are pre-loaded
+# @name mcpSession
+POST {{mcpApiHost}}/api/mcp/sessions
+Content-Type: application/json
+
+{
+  "model": "gpt-4o"
+}
+
+###
+
+@mcpSessionId = {{mcpSession.response.body.sessionId}}
+
+### Ask about weather — Copilot will call get_weather via MCP
+POST {{mcpApiHost}}/api/mcp/{{mcpSessionId}}/messages
+Content-Type: application/json
+
+{
+  "message": "What's the weather like in London and Tokyo right now? Compare them."
+}
+
+###
+
+### Use the calculator tool — Copilot will call calculate via MCP
+POST {{mcpApiHost}}/api/mcp/{{mcpSessionId}}/messages
+Content-Type: application/json
+
+{
+  "message": "What is 17 * 23 + sqrt(144)? Show the calculation steps."
+}
+
+###
+
+### Use the time tool — Copilot will call get_current_time via MCP
+POST {{mcpApiHost}}/api/mcp/{{mcpSessionId}}/messages
+Content-Type: application/json
+
+{
+  "message": "What time is it right now in New York, London, and Tokyo?"
+}
+
+###
+
+### Multi-tool call — Copilot orchestrates multiple MCP tool calls
+POST {{mcpApiHost}}/api/mcp/{{mcpSessionId}}/messages
+Content-Type: application/json
+
+{
+  "message": "I'm planning a trip. Give me the weather in Dubai and the current time there. Also, what's 15% of 2500 for tipping budget?"
+}
+
+###
+
+### Delete the MCP session
+DELETE {{mcpApiHost}}/api/mcp/{{mcpSessionId}}

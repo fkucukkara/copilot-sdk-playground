@@ -1,0 +1,76 @@
+### RAG API Examples
+### Start the project via AppHost or: dotnet run --project CopilotSDKPlayground.RagApi
+@ragHost = http://localhost:5200
+
+### ─── Document Management ────────────────────────────────────────────────────
+
+### List ingested documents (3 pre-seeded documents available on startup)
+GET {{ragHost}}/api/rag/documents
+
+###
+
+### Ingest a custom document
+POST {{ragHost}}/api/rag/documents
+Content-Type: application/json
+
+{
+  "title": "C# 14 New Features",
+  "content": "C# 14 introduces the field keyword for accessing backing fields of auto-properties, allowing custom property implementations without losing auto-property benefits. Primary constructors now support default parameter values and improved diagnostics. The language also adds new pattern matching capabilities including list patterns with spread elements, and enhanced lambda expression improvements for better type inference in complex generic scenarios.",
+  "source": "Microsoft C# Documentation"
+}
+
+###
+
+### Delete a document (replace abc12345 with actual ID from ingest response)
+# @documentId = abc12345
+DELETE {{ragHost}}/api/rag/documents/abc12345
+
+### ─── RAG Chat ───────────────────────────────────────────────────────────────
+
+### Create a RAG-enabled chat session
+# @name ragSession
+POST {{ragHost}}/api/rag/sessions
+Content-Type: application/json
+
+{
+  "model": "gpt-4o",
+  "topK": 3
+}
+
+###
+
+@ragSessionId = {{ragSession.response.body.sessionId}}
+
+### Query — uses TF-IDF retrieval then Copilot generates a grounded answer
+# The response includes 'retrievedChunks' showing exactly what context was injected
+POST {{ragHost}}/api/rag/{{ragSessionId}}/query
+Content-Type: application/json
+
+{
+  "query": "What are the key improvements in .NET 10?"
+}
+
+###
+
+### Query — Aspire overview
+POST {{ragHost}}/api/rag/{{ragSessionId}}/query
+Content-Type: application/json
+
+{
+  "query": "How does Aspire help with service discovery and configuration?"
+}
+
+###
+
+### Query — GitHub Copilot SDK
+POST {{ragHost}}/api/rag/{{ragSessionId}}/query
+Content-Type: application/json
+
+{
+  "query": "How do I use tool calling in the GitHub Copilot SDK?"
+}
+
+###
+
+### Delete session
+DELETE {{ragHost}}/api/rag/{{ragSessionId}}
