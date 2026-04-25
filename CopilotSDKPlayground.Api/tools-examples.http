@@ -1,0 +1,52 @@
+@api_base_url = https://localhost:7123
+
+### List available tools
+GET {{api_base_url}}/api/tools/available
+
+###
+
+### Create a tool-enabled session
+POST {{api_base_url}}/api/tools/sessions
+Content-Type: application/json
+
+{
+  "model": "gpt-4o",
+  "sessionId": "my-tool-session-1"
+}
+
+###
+
+### Send a message that triggers the weather tool
+POST {{api_base_url}}/api/tools/my-tool-session-1/messages
+Content-Type: application/json
+
+{
+  "prompt": "What is the weather in Istanbul?"
+}
+
+###
+
+### Send a message that triggers the calculate tool
+POST {{api_base_url}}/api/tools/my-tool-session-1/messages
+Content-Type: application/json
+
+{
+  "prompt": "What is (12 + 4) * 3?"
+}
+
+###
+
+### Send a message that triggers the time tool
+POST {{api_base_url}}/api/tools/my-tool-session-1/messages
+Content-Type: application/json
+
+{
+  "prompt": "What time is it in Europe/London right now?"
+}
+
+###
+
+### Delete the tool session
+DELETE {{api_base_url}}/api/tools/my-tool-session-1
+
+###

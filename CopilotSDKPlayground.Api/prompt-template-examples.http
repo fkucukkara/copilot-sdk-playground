@@ -1,0 +1,23 @@
+@api_base_url = https://localhost:7123
+
+### List all prompt templates
+GET {{api_base_url}}/api/prompts/templates
+
+###
+
+### Get a specific template by name
+GET {{api_base_url}}/api/prompts/templates/code-reviewer
+
+###
+
+### Create a session with a prompt template
+POST {{api_base_url}}/api/prompts/sessions
+Content-Type: application/json
+
+{
+  "templateName": "code-reviewer",
+  "model": "gpt-4o",
+  "sessionId": "my-template-session-1"
+}
+
+###

@@ -1,0 +1,32 @@
+@api_base_url = https://localhost:7123
+
+### Create a memory-backed session
+POST {{api_base_url}}/api/memory/sessions
+Content-Type: application/json
+
+{
+  "userId": "user-123",
+  "model": "gpt-4o"
+}
+
+###
+
+### Send a message (update sessionId from response above)
+POST {{api_base_url}}/api/memory/my-memory-session-1/messages?userId=user-123
+Content-Type: application/json
+
+{
+  "prompt": "My favorite programming language is C#. Remember that."
+}
+
+###
+
+### Get stored memory for a user
+GET {{api_base_url}}/api/memory/user-123
+
+###
+
+### Delete stored memory for a user
+DELETE {{api_base_url}}/api/memory/user-123
+
+###

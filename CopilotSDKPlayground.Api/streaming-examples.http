@@ -1,0 +1,11 @@
+@api_base_url = https://localhost:7123
+
+### Create a streaming session
+POST {{api_base_url}}/api/stream/sessions?model=gpt-4o&sessionId=my-stream-session-1
+
+###
+
+### Stream a message (SSE response)
+GET {{api_base_url}}/api/stream/my-stream-session-1?prompt=Tell me a short story about a robot
+
+###
