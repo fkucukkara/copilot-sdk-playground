@@ -21,8 +21,10 @@ var mcpServer = builder.AddProject<Projects.CopilotSDKPlayground_McpServer>("mcp
 
 // MCP API — Copilot SDK sessions backed by MCP server tools
 // WithReference injects Aspire service discovery so "mcp-server" resolves automatically
+// WaitFor ensures mcp-server is healthy before mcp-api starts connecting
 builder.AddProject<Projects.CopilotSDKPlayground_McpApi>("mcp-api")
     .WithReference(mcpServer)
+    .WaitFor(mcpServer)
     .WithExternalHttpEndpoints();
 
 // Agents API — Coordinator pattern + Orchestrator/sub-agent parallel pattern

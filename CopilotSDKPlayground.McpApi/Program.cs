@@ -25,8 +25,18 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
-// Initialize Copilot client and connect to the MCP server
-await app.Services.GetRequiredService<McpCopilotService>().InitializeAsync();
+// Initialize Copilot client and connect to the MCP server.
+// Wrapped in try/catch so the app can still start when running standalone
+// (without Aspire) and the MCP server is not available.
+try
+{
+    await app.Services.GetRequiredService<McpCopilotService>().InitializeAsync();
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogWarning(ex, "MCP server is not reachable at startup. Tool features will be unavailable until the server comes online.");
+}
 
 app.MapMcpEndpoints();
 
